@@ -22,6 +22,7 @@ class TextProcError(Exception):
     Base Class for TextProc Exceptions
 
     """
+    error_message = 'Processors require strings'
 
     def __init__(self, msg):
         """
@@ -84,7 +85,7 @@ class Processor:
 
         """
 
-        alpha = re.compile(r'[a-z]')
+        alpha = re.compile(r'[a-z]', re.IGNORECASE)
         return len(alpha.findall(self.text))
 
     def count_numeric(self):
@@ -95,7 +96,7 @@ class Processor:
 
         """
 
-        alpha = re.compile(r'[1-9]')
+        alpha = re.compile(r'[0-9]')
         return len(alpha.findall(self.text))
 
     def count_vowels(self):
@@ -106,7 +107,7 @@ class Processor:
 
         """
 
-        vowels = re.compile(r'[aeou]', re.IGNORECASE)
+        vowels = re.compile(r'[aeiou]', re.IGNORECASE)
         return len(vowels.findall(self.text))
 
     def is_phonenumber(self):
@@ -117,7 +118,7 @@ class Processor:
 
         """
 
-        phonenum = re.compile(r'^[1-9]{3}([\-.])*[1-9]{3}\1*[1-9]{3}$')
+        phonenum = re.compile(r'^[0-9]{3}([\-.])*[0-9]{3}([\-.])*[0-9]{4}$')
         if phonenum.match(self.text) is None:
             return False
         else:
